@@ -63,3 +63,34 @@ public void afterReturningFindAccountAdvice(
 2. Add new method: findAccounts() in AccountDAO
 3. Update main app to call new method: findAccount()
 4. Add @AfterReturning advice
+
+***
+
+**Post_Process / Modify Data**
+
+<img src="https://user-images.githubusercontent.com/80107049/189671730-001affe9-dca3-45de-9e81-1b7f1010c300.png" width=500 />
+
+_Modify the Return Value_
+
+```JAVA
+@AfterReturning(
+  pointcut="execution(* com.tilmeez.aopdemo.dao.AccountDAO.findAccount(..))",
+  returning="result")
+public void afterReturningFindAccountAdvice(
+  JoinPoint theJointPoint, List<Account> result) {
+  
+  // moddify "result" list: add, remove, update, etc ...
+  if (result.isEmpty()) {
+    
+  Account tempAccount = result.get(0);
+  
+  tempAccount.setName("Daffy Duck");
+  }
+}
+```
+
+_Calling program_
+```JAVA
+// all method to find the accounts
+List<Account> theAccounts = theAccountDAO.findAccounts();
+```
